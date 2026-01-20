@@ -2,6 +2,9 @@ const start = document.querySelector('.btn__reset');
 const over = document.getElementById('overlay');
 const first = document.getElementById('first');
 const caller = document.getElementById('caller');
+const tries = document.querySelectorAll('.tries');
+let chance = tries.length -1;
+console.log(chance);
 
 const arrays = ["strength", "discipline", "focus", "growth", "consistency", "patience", "resilience", "success", "progress"];
 const selectedWord = arrays[Math.floor(Math.random() * arrays.length)];
@@ -13,25 +16,40 @@ start.addEventListener('click', function(){
 });
 
 
-// first.addEventListener('click', function(){
-// let li = document.createElement('li');
-// li.textContent='q';
-// caller.appendChild(li)
-// });
+first.addEventListener('click', function(){
+let li = document.createElement('li');
+li.textContent='q';
+caller.appendChild(li)
+});
+
+function storeWrongWord(letter){
+    wrongLetter.push(letter);
+    console.log("wrong tries: "+wrongLetter);
+    if(wrongLetter.length < 5){
+        tries[chance].style.display='none';
+        chance--;
+        console.log(tries[chance]);
+    }else{
+        console.log("you have finished your chance !")
+    }
+}
 
 function displayWord(){
-    caller.innerHTML= `
-    ${
-        selectedWord
-        .split("")
-        .map(letter => `
-            ${
+   const  arraySelectedWord = selectedWord.split('');
+   const test  =  arraySelectedWord.map(function(abel){
+       if(correctedLetter.includes(abel)){
+          return `<li>${abel}</li>`;
+       }else {
+          return `<li></li>`;
+       }
+   });
 
-            }
-            `)
-    }
-    `
 
+   caller.innerHTML = test.join('');
+//    caller.style.display = "flex";
+//    caller.style.flexWrap ="wrap";
+ 
+   //const innerWord = caller.innerText;
 }
 displayWord();
 
@@ -39,9 +57,16 @@ displayWord();
 document.querySelectorAll('button').forEach(function(btn){
     btn.addEventListener('click', function(e){
         let letter = e.target;
-        let li = document.createElement('li');
-        li.textContent=letter.textContent;
-        caller.appendChild(li);
+        let letterValue = letter.innerText;
+        const  arraySelectedWord = selectedWord.split('');
+        if(arraySelectedWord.includes(letterValue)){
+            if(!correctedLetter.includes(letterValue)){
+                correctedLetter.push(letterValue);
+                displayWord();
+                console.log("coorect letter "+correctedLetter);
+            }
+        }else{
+                storeWrongWord(letterValue);
+            }
     })
-
 });
