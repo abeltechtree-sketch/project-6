@@ -3,11 +3,15 @@ const over = document.getElementById('overlay');
 const first = document.getElementById('first');
 const caller = document.getElementById('caller');
 const tries = document.querySelectorAll('.tries');
+const fail = document.querySelector('.fail');
+const success = document.querySelector('.success');
+
 let chance = tries.length -1;
 console.log(chance);
 
 const arrays = ["strength", "discipline", "focus", "growth", "consistency", "patience", "resilience", "success", "progress"];
 const selectedWord = arrays[Math.floor(Math.random() * arrays.length)];
+console.log(selectedWord);
 const correctedLetter = [];
 const wrongLetter = [];
 
@@ -30,7 +34,10 @@ function storeWrongWord(letter){
         chance--;
         console.log(tries[chance]);
     }else{
-        console.log("you have finished your chance !")
+        console.log("you have finished your chance !");
+        over.style.display='flex';
+        fail.innerText="you have lost!";
+        over.style.background="pink";
     }
 }
 
@@ -46,10 +53,13 @@ function displayWord(){
 
 
    caller.innerHTML = test.join('');
-//    caller.style.display = "flex";
-//    caller.style.flexWrap ="wrap";
- 
-   //const innerWord = caller.innerText;
+   const newText = caller.innerText;
+   console.log(newText);
+   if(newText === selectedWord){
+    over.style.display='flex';
+    success.innerText="your are a winner!";
+    over.style.background="green";
+   }
 }
 displayWord();
 
@@ -63,7 +73,7 @@ document.querySelectorAll('button').forEach(function(btn){
             if(!correctedLetter.includes(letterValue)){
                 correctedLetter.push(letterValue);
                 displayWord();
-                console.log("coorect letter "+correctedLetter);
+                // console.log("coorect letter "+correctedLetter);
             }
         }else{
                 storeWrongWord(letterValue);

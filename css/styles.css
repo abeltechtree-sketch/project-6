@@ -171,3 +171,15 @@ button {
 .lose a {
   color: var(--color-lose);
 }
+.fail{
+  font-size: 25px;
+  text-transform: uppercase;
+  font-weight: bolder;
+  color: red;
+}
+.success{
+  font-size: 25px;
+  text-transform: uppercase;
+  font-weight: bolder;
+  color: white;
+}
